@@ -352,7 +352,7 @@ var mutations = {
     } else {
       state.game.team_counter = 0;
       state.game.players.push({
-        index: player_counter,
+        index: state.game.players.length,
         name: name,
         score: 0,
         team: undefined

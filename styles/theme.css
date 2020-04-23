@@ -473,3 +473,9 @@ html.img-top div.slide-background.present {
 .reveal ul, .reveal dl, .reveal ol {
   display: unset;
   margin: unset; }
+
+.opacity-ghost {
+  @apply bg-blue text-white rounded; }
+
+.opacity-ghost svg {
+  fill: white; }

@@ -1,10 +1,9 @@
 ***************
-Cameo Price Is Right
+COVID Catchphrase
 ***************
 
-A game show for the cost conscious pop culture celebrity wonk delivered over
-video conference.
-
+A teleconference friendly interpretation of Headsup, Catchphrase and other
+audio charades.
 
 **Table of Contents**
 

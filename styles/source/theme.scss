@@ -310,3 +310,11 @@ html.img-top div.slide-background.present {
   display: unset;
   margin: unset;
 }
+
+.opacity-ghost {
+  @apply bg-blue text-white rounded;
+}
+
+.opacity-ghost svg {
+  fill: white;
+}

@@ -28,9 +28,10 @@
         <div class="group">
           <container group-name="1" 
                      :get-child-payload="player_index => getChildPayload(team_index, player_index)"
+                     drag-class="opacity-ghost"
                      @drop="onDrop(team.name, $event)">
           <draggable v-for="player in team.players" :key="player.index">
-          <div class="draggable-item">
+          <div class="draggable-item bg-white">
             <span class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
               <div class="px-2 py-2 flex items-center sm:px-6">
                 <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
@@ -43,7 +44,7 @@
                     <div class="flex overflow-hidden">
                       <div class="inline-flex items-center px-1 py-0.5
                       rounded-full text-sm text-white font-semibold leading-5
-                      green">
+                      green score">
                         {{ player.score }}
                       </div>
                     </div>
@@ -97,6 +98,8 @@ export default {
           this.movePlayer(team, dropResult)
         } 
       }
+
+      return dropResult
     },
     removePlayerFromTeam(team_name, event) {
       if (event) {

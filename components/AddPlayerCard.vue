@@ -74,7 +74,7 @@ export default {
         return
       }
 
-      this.$store.commit('addPlayer', name)
+      this.$store.commit('addPlayer', {name: name})
       this.player_name = ''
     },
     addTeam(name) {

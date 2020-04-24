@@ -44,32 +44,45 @@ const getters = {
 }
 
 const mutations = {
-  addPlayer(state, name) {
-    if (name.trim() === '') {
+  addPlayer(state, payload) {
+    if (payload.name.trim() === '') {
       return
     }
     if (state.game.teams.length > 0 ) {
       if (state.game.team_counter > state.game.teams.length - 1) {
         state.game.team_counter = 0
       }
-
-      state.game.players.push({
+      
+      var player = {
         index: state.game.teams[state.game.team_counter].players.length,
-        name: name,
+        name: payload.name,
         score: 0,
         team: state.game.teams[state.game.team_counter].name
-      })
+      }
+
+      if (payload.index) {
+        state.game.players.splice(payload.index, 0, player)
+      } else {
+        state.game.players.push(player)
+      }
 
       state.game.team_counter++
     } else {
       state.game.team_counter = 0
 
-      state.game.players.push({
+      var player = {
         index: state.game.players.length,
-        name: name,
+        name: payload.name,
         score: 0,
         team: undefined 
-      })
+      }
+
+      if (payload.index === undefined) {
+        state.game.players.push(player)
+      } else {
+        player.index = payload.index
+        state.game.players.splice(payload.index, 0, player)
+      }
     }
   },
   removePlayer(state, name) {

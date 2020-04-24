@@ -30,7 +30,7 @@
                      :get-child-payload="player_index => getChildPayload(team_index, player_index)"
                      drag-class="opacity-ghost"
                      @drop="onDrop(team.name, $event)">
-          <draggable v-for="player in team.players" :key="player.index">
+          <draggable v-for="player in team.players">
           <div class="draggable-item bg-white">
             <span class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
               <div class="px-2 py-2 flex items-center sm:px-6">
@@ -101,32 +101,15 @@ export default {
 
       return dropResult
     },
-    removePlayerFromTeam(team_name, event) {
-      if (event) {
-        if (event.removedIndex) {
-          this.changeAttributeOfPlayer({'player_name': event.payload.name,
-                                        'attribute': 'team',
-                                        'value': null})
-        }
-      }
-    },
     movePlayer(team_name, event) {
       if (event) {
         if (event.addedIndex) {
-          this.getPlayersFromTeam(team_name).forEach(function(player) {
-            if (player.index >= event.addedIndex ) {
-              this.changeAttributeOfPlayer({'player_name': player.name,
-                                            attribute: 'index',
-                                            value: player.index + 1})
-            }
-          }.bind(this))
-
-          this.changeAttributesOfPlayer({'player_name': event.payload.name,
-            attributes: [{attribute: 'team',
-                          value: team_name},
-                         {attribute: 'index',
-                          value: event.addedIndex}]
-          })
+          this.removePlayer(event.payload.name)
+          this.addPlayer({name: event.payload.name,
+                          index: event.addedIndex})
+          this.changeAttributeOfPlayer({'player_name': event.payload.name,
+                                        'attribute': 'team',
+                                        'value': team_name})
         }
       }
     },
@@ -135,6 +118,7 @@ export default {
     },
     ...mapMutations(['removePlayer',
                      'removeTeam',
+                     'addPlayer',
                      'changeAttributeOfPlayer',
                      'changeAttributesOfPlayer']),
   }

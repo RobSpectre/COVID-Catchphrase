@@ -39,7 +39,9 @@ var _default = {
         return;
       }
 
-      this.$store.commit('addPlayer', name);
+      this.$store.commit('addPlayer', {
+        name: name
+      });
       this.player_name = '';
     },
     addTeam: function addTeam(name) {
@@ -84,21 +86,53 @@ var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/de
 
 var _vuex = require("vuex");
 
+var _vueSmoothDnd = require("vue-smooth-dnd");
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var _default = {
   name: 'DisplayPlayers',
+  components: {
+    Container: _vueSmoothDnd.Container,
+    Draggable: _vueSmoothDnd.Draggable
+  },
   computed: _objectSpread({}, (0, _vuex.mapState)(['game'])),
-  methods: _objectSpread({}, (0, _vuex.mapMutations)(['removePlayer']))
+  methods: _objectSpread({
+    onDrop: function onDrop(dropResult) {
+      if (dropResult) {
+        if (dropResult.addedIndex) {
+          this.movePlayer(dropResult);
+        }
+      }
+
+      return dropResult;
+    },
+    movePlayer: function movePlayer(event) {
+      if (event) {
+        if (event.addedIndex) {
+          console.log(event);
+          this.removePlayer(event.payload.name);
+          this.addPlayer({
+            name: event.payload.name,
+            index: event.addedIndex
+          });
+        }
+      }
+    },
+    getChildPayload: function getChildPayload(player_index) {
+      var player = this.game.players[player_index];
+      return player;
+    }
+  }, (0, _vuex.mapMutations)(['addPlayer', 'removePlayer', 'changeAttributeOfPlayer']))
 };
 exports["default"] = _default;
 })()
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
-__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"bg-white shadow overflow-hidden sm:rounded-md mt-5"},[_vm._m(0),_vm._v(" "),_vm._l((_vm.game.players),function(player){return _c('ul',[_c('li',[_c('span',{staticClass:"block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"},[_c('div',{staticClass:"px-2 py-2 flex items-center sm:px-6"},[_c('div',{staticClass:"min-w-0 flex-1 sm:flex sm:items-center sm:justify-between"},[_c('div',[_c('div',{staticClass:"text-sm leading-5 font-medium truncate"},[_vm._v("\n                  "+_vm._s(player.name)+"\t\n                ")])]),_vm._v(" "),_c('div',{staticClass:"mt-1 flex-shrink-0 sm:mt-0"},[_c('div',{staticClass:"flex overflow-hidden"},[_c('div',{staticClass:"inline-flex items-center px-1 py-0.5\n                  rounded-full text-sm text-white font-semibold leading-5\n                  green"},[_vm._v("\n                    "+_vm._s(player.score)+"\n                  ")])])])]),_vm._v(" "),_c('div',{staticClass:"ml-5 flex-shrink-0"},[_c('span',{on:{"click":function($event){return _vm.removePlayer(player.name)}}},[_c('svg',{staticClass:"-ml-1 mr-2 h-5 w-5 text-gray-400",attrs:{"fill":"currentColor","viewBox":"0 0 20 20"}},[_c('path',{attrs:{"d":"M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"}})])])])])])])])})],2)])}
+__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"bg-white shadow overflow-hidden sm:rounded-md mt-5"},[_vm._m(0),_vm._v(" "),_c('div',[_c('container',{attrs:{"drag-class":"opacity-ghost","get-child-payload":function (player_index) { return _vm.getChildPayload(player_index); }},on:{"drop":function($event){return _vm.onDrop($event)}}},_vm._l((this.game.players),function(player){return _c('draggable',[_c('div',{staticClass:"draggable-item bg-white"},[_c('span',{staticClass:"block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"},[_c('div',{staticClass:"px-2 py-2 flex items-center sm:px-6"},[_c('div',{staticClass:"min-w-0 flex-1 sm:flex sm:items-center sm:justify-between"},[_c('div',[_c('div',{staticClass:"text-sm leading-5 font-medium truncate"},[_vm._v("\n                "+_vm._s(player.name)+"\t\n              ")])]),_vm._v(" "),_c('div',{staticClass:"mt-1 flex-shrink-0 sm:mt-0"},[_c('div',{staticClass:"flex overflow-hidden"},[_c('div',{staticClass:"inline-flex items-center px-1 py-0.5\n                rounded-full text-sm text-white font-semibold leading-5\n                green"},[_vm._v("\n                  "+_vm._s(player.score)+"\n                ")])])])]),_vm._v(" "),_c('div',{staticClass:"ml-5 flex-shrink-0"},[_c('span',{on:{"click":function($event){return _vm.removePlayer(player.name)}}},[_c('svg',{staticClass:"-ml-1 mr-2 h-5 w-5 text-gray-400",attrs:{"fill":"currentColor","viewBox":"0 0 20 20"}},[_c('path',{attrs:{"d":"M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"}})])])])])])])])}),1)],1)])])}
 __vue__options__.staticRenderFns = [function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"bg-green px-2 py-2 border-b border-gray-200 sm:px-6"},[_c('div',{staticClass:"-ml-2 -mt-1 flex items-center justify-between flex-wrap sm:flex-no-wrap"},[_c('div',{staticClass:"ml-2 mt-1"},[_c('span',{staticClass:"reset-this text-lg leading-6 font-semibold text-white"},[_vm._v("\n            Players\n          ")])])])])}]
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -110,7 +144,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
     hotAPI.rerender("data-v-60a1ea3c", __vue__options__)
   }
 })()}
-},{"@babel/runtime/helpers/defineProperty":4,"@babel/runtime/helpers/interopRequireDefault":5,"vue":12,"vue-hot-reload-api":8,"vuex":14}],3:[function(require,module,exports){
+},{"@babel/runtime/helpers/defineProperty":4,"@babel/runtime/helpers/interopRequireDefault":5,"vue":12,"vue-hot-reload-api":8,"vue-smooth-dnd":9,"vuex":14}],3:[function(require,module,exports){
 ;(function(){
 "use strict";
 
@@ -153,38 +187,18 @@ var _default = {
 
       return dropResult;
     },
-    removePlayerFromTeam: function removePlayerFromTeam(team_name, event) {
-      if (event) {
-        if (event.removedIndex) {
-          this.changeAttributeOfPlayer({
-            'player_name': event.payload.name,
-            'attribute': 'team',
-            'value': null
-          });
-        }
-      }
-    },
     movePlayer: function movePlayer(team_name, event) {
       if (event) {
         if (event.addedIndex) {
-          this.getPlayersFromTeam(team_name).forEach(function (player) {
-            if (player.index >= event.addedIndex) {
-              this.changeAttributeOfPlayer({
-                'player_name': player.name,
-                attribute: 'index',
-                value: player.index + 1
-              });
-            }
-          }.bind(this));
-          this.changeAttributesOfPlayer({
+          this.removePlayer(event.payload.name);
+          this.addPlayer({
+            name: event.payload.name,
+            index: event.addedIndex
+          });
+          this.changeAttributeOfPlayer({
             'player_name': event.payload.name,
-            attributes: [{
-              attribute: 'team',
-              value: team_name
-            }, {
-              attribute: 'index',
-              value: event.addedIndex
-            }]
+            'attribute': 'team',
+            'value': team_name
           });
         }
       }
@@ -192,14 +206,14 @@ var _default = {
     getChildPayload: function getChildPayload(team_index, player_index) {
       return this.teamsWithPlayers[team_index].players[player_index];
     }
-  }, (0, _vuex.mapMutations)(['removePlayer', 'removeTeam', 'changeAttributeOfPlayer', 'changeAttributesOfPlayer']))
+  }, (0, _vuex.mapMutations)(['removePlayer', 'removeTeam', 'addPlayer', 'changeAttributeOfPlayer', 'changeAttributesOfPlayer']))
 };
 exports["default"] = _default;
 })()
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
-__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"groups"},_vm._l((_vm.teamsWithPlayers),function(team,team_index){return _c('div',{staticClass:"bg-white shadow overflow-hidden sm:rounded-md mt-5"},[_c('div',{staticClass:"bg-green px-2 py-2 border-b border-gray-200 sm:px-6"},[_c('div',{staticClass:"-ml-2 -mt-1 flex items-center justify-between flex-wrap sm:flex-no-wrap"},[_c('div',{staticClass:"ml-2 mt-1"},[_c('span',{staticClass:"reset-this text-lg leading-6 font-semibold text-white"},[_vm._v("\n              "+_vm._s(team.name)+"\n            ")])]),_vm._v(" "),_c('div',{staticClass:"ml-4 mt-4 flex-shrink-0 flex"},[_c('span',{staticClass:"inline-flex rounded-md shadow-sm"},[_c('button',{staticClass:"relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800",attrs:{"type":"button"},on:{"click":function($event){return _vm.removeTeam(team.name)}}},[_c('svg',{staticClass:"-ml-1 mr-2 h-5 w-5 text-gray-400",attrs:{"fill":"currentColor","viewBox":"0 0 20 20"}},[_c('path',{attrs:{"d":"M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"}})]),_vm._v(" "),_c('span',[_vm._v("\n                  Remove \n                ")])])])])])]),_vm._v(" "),_c('div',{staticClass:"group"},[_c('container',{attrs:{"group-name":"1","get-child-payload":function (player_index) { return _vm.getChildPayload(team_index, player_index); },"drag-class":"opacity-ghost"},on:{"drop":function($event){return _vm.onDrop(team.name, $event)}}},_vm._l((team.players),function(player){return _c('draggable',{key:player.index},[_c('div',{staticClass:"draggable-item bg-white"},[_c('span',{staticClass:"block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"},[_c('div',{staticClass:"px-2 py-2 flex items-center sm:px-6"},[_c('div',{staticClass:"min-w-0 flex-1 sm:flex sm:items-center sm:justify-between"},[_c('div',[_c('div',{staticClass:"text-sm leading-5 font-medium truncate"},[_vm._v("\n                    "+_vm._s(player.name)+"\t\n                  ")])]),_vm._v(" "),_c('div',{staticClass:"mt-1 flex-shrink-0 sm:mt-0"},[_c('div',{staticClass:"flex overflow-hidden"},[_c('div',{staticClass:"inline-flex items-center px-1 py-0.5\n                    rounded-full text-sm text-white font-semibold leading-5\n                    green score"},[_vm._v("\n                      "+_vm._s(player.score)+"\n                    ")])])])]),_vm._v(" "),_c('div',{staticClass:"ml-5 flex-shrink-0"},[_c('span',{on:{"click":function($event){return _vm.removePlayer(player.name)}}},[_c('svg',{staticClass:"-ml-1 mr-2 h-5 w-5 text-gray-400",attrs:{"fill":"currentColor","viewBox":"0 0 20 20"}},[_c('path',{attrs:{"d":"M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"}})])])])])])])])}),1)],1)])}),0)])}
+__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"groups"},_vm._l((_vm.teamsWithPlayers),function(team,team_index){return _c('div',{staticClass:"bg-white shadow overflow-hidden sm:rounded-md mt-5"},[_c('div',{staticClass:"bg-green px-2 py-2 border-b border-gray-200 sm:px-6"},[_c('div',{staticClass:"-ml-2 -mt-1 flex items-center justify-between flex-wrap sm:flex-no-wrap"},[_c('div',{staticClass:"ml-2 mt-1"},[_c('span',{staticClass:"reset-this text-lg leading-6 font-semibold text-white"},[_vm._v("\n              "+_vm._s(team.name)+"\n            ")])]),_vm._v(" "),_c('div',{staticClass:"ml-4 mt-4 flex-shrink-0 flex"},[_c('span',{staticClass:"inline-flex rounded-md shadow-sm"},[_c('button',{staticClass:"relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800",attrs:{"type":"button"},on:{"click":function($event){return _vm.removeTeam(team.name)}}},[_c('svg',{staticClass:"-ml-1 mr-2 h-5 w-5 text-gray-400",attrs:{"fill":"currentColor","viewBox":"0 0 20 20"}},[_c('path',{attrs:{"d":"M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"}})]),_vm._v(" "),_c('span',[_vm._v("\n                  Remove \n                ")])])])])])]),_vm._v(" "),_c('div',{staticClass:"group"},[_c('container',{attrs:{"group-name":"1","get-child-payload":function (player_index) { return _vm.getChildPayload(team_index, player_index); },"drag-class":"opacity-ghost"},on:{"drop":function($event){return _vm.onDrop(team.name, $event)}}},_vm._l((team.players),function(player){return _c('draggable',[_c('div',{staticClass:"draggable-item bg-white"},[_c('span',{staticClass:"block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"},[_c('div',{staticClass:"px-2 py-2 flex items-center sm:px-6"},[_c('div',{staticClass:"min-w-0 flex-1 sm:flex sm:items-center sm:justify-between"},[_c('div',[_c('div',{staticClass:"text-sm leading-5 font-medium truncate"},[_vm._v("\n                    "+_vm._s(player.name)+"\t\n                  ")])]),_vm._v(" "),_c('div',{staticClass:"mt-1 flex-shrink-0 sm:mt-0"},[_c('div',{staticClass:"flex overflow-hidden"},[_c('div',{staticClass:"inline-flex items-center px-1 py-0.5\n                    rounded-full text-sm text-white font-semibold leading-5\n                    green score"},[_vm._v("\n                      "+_vm._s(player.score)+"\n                    ")])])])]),_vm._v(" "),_c('div',{staticClass:"ml-5 flex-shrink-0"},[_c('span',{on:{"click":function($event){return _vm.removePlayer(player.name)}}},[_c('svg',{staticClass:"-ml-1 mr-2 h-5 w-5 text-gray-400",attrs:{"fill":"currentColor","viewBox":"0 0 20 20"}},[_c('path',{attrs:{"d":"M6 2l2-2h4l2 2h4v2H2V2h4zM3 6h14l-1 14H4L3 6zm5 2v10h1V8H8zm3 0v10h1V8h-1z"}})])])])])])])])}),1)],1)])}),0)])}
 __vue__options__.staticRenderFns = []
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

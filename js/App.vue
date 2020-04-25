@@ -31,6 +31,7 @@
       </section>
       <add-player-card></add-player-card>
       <choose-deck-card></choose-deck-card>
+      <round name="One"></round>
     </div>
   </div>
 </template>
@@ -42,13 +43,15 @@ import { mapMutations } from 'vuex'
 
 import AddPlayerCard from '../components/AddPlayerCard.vue'
 import ChooseDeckCard from '../components/ChooseDeckCard.vue'
+import Round from '../components/Round.vue'
 
 export default {
   name: 'app',
   store,
   components: {
     AddPlayerCard,
-    ChooseDeckCard
+    ChooseDeckCard,
+    Round
   },
   mounted() {
     initReveal()

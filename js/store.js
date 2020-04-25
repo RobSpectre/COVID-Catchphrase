@@ -135,6 +135,18 @@ const mutations = {
   },
   loadDeck(state, deck) {
     state.game.deck = deck
+  },
+  increasePlayerScore(state, payload) {
+    var new_players = []
+
+    state.game.players.forEach(function(player) {
+      if (player.name === payload.player_name) {
+        player.score = player.score + payload.value
+      }
+      new_players.push(player)
+    })
+
+    state.game.players = new_players
   }
 }
 

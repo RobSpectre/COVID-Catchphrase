@@ -1,5 +1,6 @@
 <template>
   <section>
+    <div>
     <carousel :navigationEnabled="true"
               :paginationEnabled="false"
               :perPage="3">
@@ -12,6 +13,7 @@
       </slide>
     </carousel>
     <h1>Choose Your Deck</h1>
+    </div>
   </section>
 </template>
 

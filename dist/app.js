@@ -171,11 +171,6 @@ var _default = {
     Container: _vueSmoothDnd.Container,
     Draggable: _vueSmoothDnd.Draggable
   },
-  data: function data() {
-    return {
-      moving_player: null
-    };
-  },
   computed: _objectSpread({}, (0, _vuex.mapState)(['game']), {}, (0, _vuex.mapGetters)(['teamsWithPlayers', 'getPlayersFromTeam'])),
   methods: _objectSpread({
     onDrop: function onDrop(team, dropResult) {
@@ -206,7 +201,7 @@ var _default = {
     getChildPayload: function getChildPayload(team_index, player_index) {
       return this.teamsWithPlayers[team_index].players[player_index];
     }
-  }, (0, _vuex.mapMutations)(['removePlayer', 'removeTeam', 'addPlayer', 'changeAttributeOfPlayer', 'changeAttributesOfPlayer']))
+  }, (0, _vuex.mapMutations)(['removePlayer', 'removeTeam', 'addPlayer', 'changeAttributeOfPlayer']))
 };
 exports["default"] = _default;
 })()
@@ -222,7 +217,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   if (!module.hot.data) {
     hotAPI.createRecord("data-v-715369fe", __vue__options__)
   } else {
-    hotAPI.rerender("data-v-715369fe", __vue__options__)
+    hotAPI.reload("data-v-715369fe", __vue__options__)
   }
 })()}
 },{"@babel/runtime/helpers/defineProperty":7,"@babel/runtime/helpers/interopRequireDefault":8,"vue":15,"vue-hot-reload-api":11,"vue-smooth-dnd":12,"vuex":20}],4:[function(require,module,exports){

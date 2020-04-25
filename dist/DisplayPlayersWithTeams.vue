@@ -25,11 +25,6 @@ var _default = {
     Container: _vueSmoothDnd.Container,
     Draggable: _vueSmoothDnd.Draggable
   },
-  data: function data() {
-    return {
-      moving_player: null
-    };
-  },
   computed: _objectSpread({}, (0, _vuex.mapState)(['game']), {}, (0, _vuex.mapGetters)(['teamsWithPlayers', 'getPlayersFromTeam'])),
   methods: _objectSpread({
     onDrop: function onDrop(team, dropResult) {
@@ -60,7 +55,7 @@ var _default = {
     getChildPayload: function getChildPayload(team_index, player_index) {
       return this.teamsWithPlayers[team_index].players[player_index];
     }
-  }, (0, _vuex.mapMutations)(['removePlayer', 'removeTeam', 'addPlayer', 'changeAttributeOfPlayer', 'changeAttributesOfPlayer']))
+  }, (0, _vuex.mapMutations)(['removePlayer', 'removeTeam', 'addPlayer', 'changeAttributeOfPlayer']))
 };
 exports["default"] = _default;
 })()

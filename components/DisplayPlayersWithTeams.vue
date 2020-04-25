@@ -81,11 +81,6 @@ export default {
     Container,
     Draggable
   },
-  data: function() {
-    return {
-      moving_player: null
-    }
-  },
   computed: {
     ...mapState(['game']),
     ...mapGetters(['teamsWithPlayers',
@@ -119,8 +114,7 @@ export default {
     ...mapMutations(['removePlayer',
                      'removeTeam',
                      'addPlayer',
-                     'changeAttributeOfPlayer',
-                     'changeAttributesOfPlayer']),
+                     'changeAttributeOfPlayer'])
   }
 }
 </script>

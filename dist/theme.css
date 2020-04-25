@@ -26590,6 +26590,11 @@ html.img-top div.slide-background.present {
   color: #fffff9;
 }
 
+.reveal a:hover {
+  color: #fffff9;
+  background-color: #f36c3f;
+}
+
 .opacity-ghost {
   background-color: #00b1e1;
   color: #ffffff;

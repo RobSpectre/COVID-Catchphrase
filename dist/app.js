@@ -108,14 +108,19 @@ var _default = {
       decks: _index["default"]
     };
   },
-  computed: _objectSpread({}, (0, _vuex.mapState)(['game']))
+  computed: _objectSpread({}, (0, _vuex.mapState)(['game'])),
+  methods: _objectSpread({
+    ignoreClick: function ignoreClick() {
+      return;
+    }
+  }, (0, _vuex.mapMutations)(['loadDeck']))
 };
 exports["default"] = _default;
 })()
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
-__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',[_c('carousel',_vm._l((_vm.decks),function(deck){return _c('slide',[_c('deck',{attrs:{"name":deck.name,"description":deck.description,"image":deck.image,"cards":deck.cards}})],1)}),1),_vm._v(" "),_c('h1',[_vm._v("Choose Your Deck")])],1)}
+__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',[_c('carousel',{attrs:{"navigationEnabled":true,"paginationEnabled":false,"perPage":3}},_vm._l((_vm.decks),function(deck){return _c('slide',{on:{"slideclick":_vm.ignoreClick}},[_c('deck',{attrs:{"name":deck.name,"description":deck.description,"image":deck.image,"cards":deck.cards}})],1)}),1),_vm._v(" "),_c('h1',[_vm._v("Choose Your Deck")])],1)}
 __vue__options__.staticRenderFns = []
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -171,7 +176,7 @@ exports["default"] = _default;
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
-__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"max-w-sm",class:{ selecteddeck: _vm.isSelected }},[_c('div',{staticClass:"h-full flex flex-col rounded-lg shadow-lg overflow-hidden lg:rounded-none lg:rounded-l-lg"},[_c('div',{staticClass:"flex-1 flex flex-col"},[_c('div',{staticClass:"bg-white px-6 py-10"},[_c('div',[_c('span',{staticClass:"text-center text-2xl leading-8 font-medium\n          text-gray-900 font-semibold"},[_vm._v(_vm._s(_vm.name))]),_vm._v(" "),_c('div',{staticClass:"mt-4 flex items-center justify-center"},[_c('span',{staticClass:"px-3 flex items-start text-6xl leading-none tracking-tight text-gray-900"},[_c('img',{staticClass:"inline-block h-24 w-24 rounded-full",attrs:{"src":_vm.image}})])])])]),_vm._v(" "),_c('div',{staticClass:"flex-1 flex flex-col justify-between border-t-2 border-gray-100 p-6 bg-gray-50 sm:p-10 lg:p-6 xl:p-10"},[_c('p',{staticClass:"mt-3 text-base leading-6 text-gray-500"},[_vm._v(_vm._s(_vm.description))]),_vm._v(" "),_c('div',{staticClass:"mt-1 flex-shrink-0 sm:mt-0 mx-auto"},[_c('div',{staticClass:"flex overflow-hidden"},[_c('span',{staticClass:"inline-flex items-center p-3 rounded-full\n            text-3xl font-medium leading-5 bg-blue text-white"},[_vm._v("\n              "+_vm._s(_vm.cards.length)+" cards\n            ")])])]),_vm._v(" "),_c('div',{staticClass:"mt-8"},[_c('div',{staticClass:"rounded-lg shadow-md"},[_c('a',{staticClass:"block w-full text-center rounded-lg border border-transparent\n               bg-green px-6 py-3 text-base leading-6 font-semibold text-white\n               hover:text-white focus:outline-none focus:shadow-outline\n               transition ease-in-out duration-150 uppercase",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.selectDeck()}}},[_vm._v("Pick This Deck")])])])])])])])}
+__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"w-64",class:{ selecteddeck: _vm.isSelected }},[_c('div',{staticClass:"h-auto flex flex-col rounded-lg shadow-lg overflow-hidden lg:rounded-none lg:rounded-l-lg"},[_c('div',{staticClass:"flex-1 flex flex-col"},[_c('div',{staticClass:"bg-white px-3 py-5"},[_c('div',[_c('span',{staticClass:"text-center text-2xl leading-8 font-medium\n          text-gray-900 font-semibold"},[_vm._v(_vm._s(_vm.name))]),_vm._v(" "),_c('div',{staticClass:"mt-4 flex items-center justify-center"},[_c('span',{staticClass:"px-3 flex items-start text-6xl leading-none tracking-tight text-gray-900"},[_c('img',{staticClass:"inline-block h-24 w-24 rounded-full",attrs:{"src":_vm.image}})])])])]),_vm._v(" "),_c('div',{staticClass:"flex-1 flex flex-col justify-between border-t-2 border-gray-100 p-6 bg-gray-50 sm:p-10 lg:p-6 xl:p-10"},[_c('p',{staticClass:"mt-3 text-base leading-6 text-gray-500"},[_vm._v(_vm._s(_vm.description))]),_vm._v(" "),_c('div',{staticClass:"mt-1 flex-shrink-0 sm:mt-0 mx-auto"},[_c('div',{staticClass:"flex overflow-hidden"},[_c('span',{staticClass:"inline-flex items-center p-3 rounded-full\n            text-xl font-medium leading-5 bg-blue text-white"},[_vm._v("\n              "+_vm._s(_vm.cards.length)+" cards\n            ")])])]),_vm._v(" "),_c('div',{staticClass:"mt-8"},[_c('div',{staticClass:"rounded-lg shadow-md"},[_c('a',{staticClass:"block w-full text-center rounded-lg border border-transparent\n               bg-green px-4 py-2 text-base leading-6 font-semibold text-white\n               hover:text-white focus:outline-none focus:shadow-outline\n               transition ease-in-out duration-150 uppercase",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.selectDeck($event)}}},[_vm._v("Pick This Deck")])])])])])])])}
 __vue__options__.staticRenderFns = []
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -180,7 +185,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   if (!module.hot.data) {
     hotAPI.createRecord("data-v-1b45de0a", __vue__options__)
   } else {
-    hotAPI.reload("data-v-1b45de0a", __vue__options__)
+    hotAPI.rerender("data-v-1b45de0a", __vue__options__)
   }
 })()}
 },{"@babel/runtime/helpers/defineProperty":10,"@babel/runtime/helpers/interopRequireDefault":11,"vue":19,"vue-hot-reload-api":15,"vuex":24}],4:[function(require,module,exports){
@@ -336,7 +341,7 @@ if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
 module.exports=[
   {
     "name": "Corona Party",
-    "description": "A way fun collection of phrases we only learned over the past 56 days.",
+    "description": "All the phrases we didn't know 56 days ago",
     "image": "/decks/images/corona.jpg",
     "cards": [
       "bleach",
@@ -347,7 +352,7 @@ module.exports=[
   },
   {
     "name": "Binge Watch",
-    "description": "Phrases you can chill with.",
+    "description": "",
     "image": "/decks/images/netflix.jpg",
     "cards": [
       "meth mouth",
@@ -356,6 +361,18 @@ module.exports=[
       "Skip Intro"
     ]
   },
+  {
+    "name": "This... is the Daily",
+    "description": "Phrases you need to know today.",
+    "image": "/decks/images/the_daily.png",
+    "cards": [
+      "Michael Barbaro",
+      "Maggie Haberman",
+      "Mike Schmidt",
+      "pausing",
+      "hmmmm"
+    ]
+  }
 ]
 
 },{}],7:[function(require,module,exports){

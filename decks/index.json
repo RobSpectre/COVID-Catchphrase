@@ -1,7 +1,7 @@
 [
   {
     "name": "Corona Party",
-    "description": "A way fun collection of phrases we only learned over the past 56 days.",
+    "description": "All the phrases we didn't know 56 days ago.",
     "image": "/decks/images/corona.jpg",
     "cards": [
       "bleach",
@@ -12,7 +12,7 @@
   },
   {
     "name": "Binge Watch",
-    "description": "Phrases you can chill with.",
+    "description": "",
     "image": "/decks/images/netflix.jpg",
     "cards": [
       "meth mouth",
@@ -21,4 +21,16 @@
       "Skip Intro"
     ]
   },
+  {
+    "name": "This... is the Daily",
+    "description": "Phrases you need to know today.",
+    "image": "/decks/images/the_daily.png",
+    "cards": [
+      "Michael Barbaro",
+      "Maggie Haberman",
+      "Mike Schmidt",
+      "pausing",
+      "hmmmm"
+    ]
+  }
 ]

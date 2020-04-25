@@ -315,6 +315,11 @@ html.img-top div.slide-background.present {
   color: $backgroundColor;
 }
 
+.reveal a:hover {
+  color: $backgroundColor;
+  background-color: $childsafeOrange;
+}
+
 .opacity-ghost {
   @apply bg-blue text-white rounded;
 }

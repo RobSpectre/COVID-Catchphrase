@@ -1,8 +1,8 @@
 <template>
-  <div class="max-w-sm" v-bind:class="{ selecteddeck: isSelected }">
-    <div class="h-full flex flex-col rounded-lg shadow-lg overflow-hidden lg:rounded-none lg:rounded-l-lg">
+  <div class="w-64" v-bind:class="{ selecteddeck: isSelected }">
+    <div class="h-auto flex flex-col rounded-lg shadow-lg overflow-hidden lg:rounded-none lg:rounded-l-lg">
       <div class="flex-1 flex flex-col">
-        <div class="bg-white px-6 py-10">
+        <div class="bg-white px-3 py-5">
           <div>
             <span class="text-center text-2xl leading-8 font-medium
             text-gray-900 font-semibold">{{ name }}</span>
@@ -18,7 +18,7 @@
           <div class="mt-1 flex-shrink-0 sm:mt-0 mx-auto">
             <div class="flex overflow-hidden">
               <span class="inline-flex items-center p-3 rounded-full
-              text-3xl font-medium leading-5 bg-blue text-white">
+              text-xl font-medium leading-5 bg-blue text-white">
                 {{ cards.length }} cards
               </span>
             </div>
@@ -27,10 +27,10 @@
             <div class="rounded-lg shadow-md">
               <a class=
               "block w-full text-center rounded-lg border border-transparent
-                 bg-green px-6 py-3 text-base leading-6 font-semibold text-white
+                 bg-green px-4 py-2 text-base leading-6 font-semibold text-white
                  hover:text-white focus:outline-none focus:shadow-outline
                  transition ease-in-out duration-150 uppercase"
-                 href="#" v-on:click.prevent="selectDeck()">Pick This Deck</a>
+                 href="#" v-on:click.prevent="selectDeck">Pick This Deck</a>
             </div>
           </div>
         </div>
@@ -44,7 +44,6 @@ import { mapState } from 'vuex'
 import { mapMutations } from 'vuex'
 
 export default {
-
   name: 'Deck',
   data: function() {
     return {

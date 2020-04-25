@@ -1,11 +1,14 @@
 <template>
   <section>
-    <carousel>
-      <slide v-for="deck in decks">
+    <carousel :navigationEnabled="true"
+              :paginationEnabled="false"
+              :perPage="3">
+      <slide v-for="deck in decks" @slideclick="ignoreClick">
         <deck :name="deck.name"
               :description="deck.description"
               :image="deck.image"
-              :cards="deck.cards"></deck>
+              :cards="deck.cards">
+        </deck>
       </slide>
     </carousel>
     <h1>Choose Your Deck</h1>
@@ -14,7 +17,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 
 import { Carousel, Slide } from 'vue-carousel'
@@ -37,6 +39,12 @@ export default {
   },
   computed: {
     ...mapState(['game']),
+  },
+  methods: {
+    ignoreClick() {
+      return
+    },
+    ...mapMutations(['loadDeck']),
   }
 }
 </script>

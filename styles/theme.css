@@ -477,6 +477,10 @@ html.img-top div.slide-background.present {
 .reveal a {
   color: #fffff9; }
 
+.reveal a:hover {
+  color: #fffff9;
+  background-color: #f36c3f; }
+
 .opacity-ghost {
   @apply bg-blue text-white rounded; }
 

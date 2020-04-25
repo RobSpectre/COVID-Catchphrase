@@ -26586,6 +26586,10 @@ html.img-top div.slide-background.present {
   margin: unset;
 }
 
+.reveal a {
+  color: #fffff9;
+}
+
 .opacity-ghost {
   background-color: #00b1e1;
   color: #ffffff;
@@ -26594,6 +26598,18 @@ html.img-top div.slide-background.present {
 
 .opacity-ghost svg {
   fill: white;
+}
+
+.selecteddeck {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0.5rem;
+  border-width: 4px;
+  border-color: #00bc70;
 }
 
 @media (min-width: 640px){

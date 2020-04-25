@@ -30,6 +30,7 @@
         <h1>Demo</h1>
       </section>
       <add-player-card></add-player-card>
+      <choose-deck-card></choose-deck-card>
     </div>
   </div>
 </template>
@@ -40,12 +41,14 @@ import { mapState } from 'vuex'
 import { mapMutations } from 'vuex'
 
 import AddPlayerCard from '../components/AddPlayerCard.vue'
+import ChooseDeckCard from '../components/ChooseDeckCard.vue'
 
 export default {
   name: 'app',
   store,
   components: {
-    AddPlayerCard
+    AddPlayerCard,
+    ChooseDeckCard
   },
   mounted() {
     initReveal()

@@ -474,8 +474,14 @@ html.img-top div.slide-background.present {
   display: unset;
   margin: unset; }
 
+.reveal a {
+  color: #fffff9; }
+
 .opacity-ghost {
   @apply bg-blue text-white rounded; }
 
 .opacity-ghost svg {
   fill: white; }
+
+.selecteddeck {
+  @apply pointer-events-none absolute inset-0 rounded-lg border-4 border-green; }

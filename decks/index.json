@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Corona Party",
+    "description": "A way fun collection of phrases we only learned over the past 56 days.",
+    "image": "/decks/images/corona.jpg",
+    "cards": [
+      "bleach",
+      "flatten",
+      "social distancing",
+      "N95"
+    ]
+  },
+  {
+    "name": "Binge Watch",
+    "description": "Phrases you can chill with.",
+    "image": "/decks/images/netflix.jpg",
+    "cards": [
+      "meth mouth",
+      "Carole Baskin",
+      "HBO Go",
+      "Skip Intro"
+    ]
+  },
+]

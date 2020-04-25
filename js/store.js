@@ -132,6 +132,9 @@ const mutations = {
     if (state.game.teams === undefined) {
       state.game.teams = []
     }
+  },
+  loadDeck(state, deck) {
+    state.game.deck = deck
   }
 }
 

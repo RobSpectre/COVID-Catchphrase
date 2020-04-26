@@ -1,8 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import VuexPersist from 'vuex-persist'
+import createPersistedState from "vuex-persistedstate"
 
 Vue.use(Vuex)
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
 
 const state = {
   game: {
@@ -10,7 +24,9 @@ const state = {
     teams: [],
     rounds: [],
     deck: [],
-    currentRound: 1,
+    skipped: [],
+    correctAnswers: [],
+    currentCatchphrase: '',
     team_counter: 0,
   }
 }
@@ -40,7 +56,7 @@ const getters = {
   },
   getPlayersFromTeam: (state) => (team_name) => {
     return state.game.players.filter(player => team_name === player.team)
-  }
+  },
 }
 
 const mutations = {
@@ -134,7 +150,31 @@ const mutations = {
     }
   },
   loadDeck(state, deck) {
-    state.game.deck = deck
+    deck.cards = shuffle(deck.cards)
+    state.game.deck = JSON.parse(JSON.stringify(deck)) 
+    state.game.skipped = []
+    state.game.correctAnswers = []
+  }, 
+  retrieveCard(state) {
+    if (state.game.deck.cards.length > 0) {
+      var candidate = state.game.deck.cards.pop()
+
+      if (state.game.correctAnswers.includes(candidate) == false) {
+        state.game.currentCatchphrase = candidate
+      } else {
+        this.commit('retrieveCard')
+      }
+    } else {
+      state.game.currentCatchphrase = 'Out of Cards - Choose another deck'
+    }
+
+  },
+  addSkipped(state, catchphrase) {
+    state.game.skipped.push(catchphrase)
+    state.game.deck.cards = shuffle(state.game.deck.cards)
+  },
+  addCorrectAnswer(state, catchphrase) {
+    state.game.correctAnswers.push(catchphrase)
   },
   increasePlayerScore(state, payload) {
     var new_players = []
@@ -150,14 +190,9 @@ const mutations = {
   }
 }
 
-const vuexPersist = new VuexPersist({
-  key: 'app',
-  storage: window.localStorage
-})
-
 export default new Vuex.Store({
   state,
   getters,
   mutations,
-  plugins: [vuexPersist.plugin]
+  plugins: [createPersistedState({key: 'app'})]
 })

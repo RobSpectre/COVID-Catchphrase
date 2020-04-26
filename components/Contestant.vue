@@ -2,7 +2,7 @@
   <section class="darkgray">
     <div v-if="started">
       <h3 class="text-white">{{ timeLeft }}</h3>
-      <h2 class="headline"i v-if="started">{{ currentCatchphrase }}</h2>
+      <h2 class="headline"i v-if="started">{{ game.currentCatchphrase }}</h2>
       <div>
         <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
           <div class="bg-white overflow-hidden shadow rounded-lg">
@@ -134,7 +134,6 @@ export default {
     return {
       correctAnswers: [],
       skips: [],
-      currentCatchphrase: '',
       started: false,
       timeLeft: this.contestLength,
       points: parseInt(this.pointValue)
@@ -162,19 +161,24 @@ export default {
       }
     },
     cycleContest() {
-      this.currentCatchphrase = this.game.deck.cards[Math.floor(Math.random()*this.game.deck.cards.length)]
+      this.retrieveCard()
     },
     skip() {
-      this.skips.push(this.currentCatchphrase)
+      this.skips.push(this.game.currentCatchphrase)
+      this.addSkipped(this.game.currentCatchphrase)
       this.cycleContest()
     },
     score() {
       this.increasePlayerScore({player_name: this.playerName,
                                  value: this.points})
-      this.correctAnswers.push(this.currentCatchphrase)
+      this.correctAnswers.push(this.game.currentCatchphrase)
+      this.addCorrectAnswer(this.game.currentCatchphrase)
       this.cycleContest()
     },
-    ...mapMutations(['increasePlayerScore']),
+    ...mapMutations(['increasePlayerScore',
+                     'retrieveCard',
+                     'addSkipped',
+                     'addCorrectAnswer']),
   }
 }
 </script>

@@ -31,11 +31,18 @@
       </section>
       <add-player-card></add-player-card>
       <choose-deck-card></choose-deck-card>
-      <round name="One"></round>
+      <round name="One"
+             point-value=1
+             contest-length=90></round>
       <add-player-card></add-player-card>
       <choose-deck-card></choose-deck-card>
-      <round name="Two"></round>
+      <round name="Two"
+             point-value=2
+             contest-length=60></round>
       <add-player-card></add-player-card>
+      <round name="Final"
+             point-value=3
+             contest-length=90></round>
     </div>
   </div>
 </template>

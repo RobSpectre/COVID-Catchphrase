@@ -1,7 +1,14 @@
 <template>
   <section class="darkgray">
     <div v-if="started">
-      <h3 class="text-white">{{ timeLeft }}</h3>
+      <div class="grid grid-cols-3">
+        <div class="content-center">
+          <img class="h-8 w-auto" src="/images/covid_catchphrase.png" />
+        </div>
+        <div>
+          <h3 class="text-white col-span-2 text-center">{{ timeLeft }}</h3>
+        </div>
+      </div>
       <h2 class="headline"i v-if="started">{{ game.currentCatchphrase }}</h2>
       <div>
         <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -135,7 +142,7 @@ export default {
       correctAnswers: [],
       skips: [],
       started: false,
-      timeLeft: this.contestLength,
+      timeLeft: parseInt(this.contestLength),
       points: parseInt(this.pointValue),
       notEnded: true,
       soundMap: {

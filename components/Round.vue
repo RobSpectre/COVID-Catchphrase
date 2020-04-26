@@ -6,8 +6,8 @@
     <contestant v-for="contestant in roundOrder"
                 :player-name="contestant.name"
                 :player-team="contestant.team"
-                point-value="1"
-                contest-length="90">
+                :point-value="pointValue"
+                :contest-length="contestLength">
     </contestant>
   </section>
 </template>
@@ -24,7 +24,9 @@ export default {
   components: {
     Contestant
   },
-  props: ['name'],
+  props: ['name',
+          'point-value',
+          'contest-length'],
   computed: {
     roundOrder: function() {
       var order = []

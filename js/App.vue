@@ -32,6 +32,10 @@
       <add-player-card></add-player-card>
       <choose-deck-card></choose-deck-card>
       <round name="One"></round>
+      <add-player-card></add-player-card>
+      <choose-deck-card></choose-deck-card>
+      <round name="Two"></round>
+      <add-player-card></add-player-card>
     </div>
   </div>
 </template>

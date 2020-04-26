@@ -19,6 +19,7 @@
           </div>
           <div class="bg-white overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:p-6">
+                <div class="text-green">Team: {{ teamName }}</div>
                 <button type="button" class="inline-flex items-center px-6 py-3
                   border border-transparent text-base leading-6 font-medium
                   rounded-md text-white bg-blue hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150"
@@ -113,6 +114,7 @@ export default {
     startGame() {
       this.started = true
       this.iterateClock()
+      this.cycleContest()
     },
     iterateClock() {
       if (this.timeLeft > 0 ) {

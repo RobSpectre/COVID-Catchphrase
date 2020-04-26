@@ -6,7 +6,7 @@
           <div class="-ml-2 -mt-1 flex items-center justify-between flex-wrap sm:flex-no-wrap">
             <div class="ml-2 mt-1">
               <span class="reset-this text-lg leading-6 font-semibold text-white">
-                {{ team.name }}
+                {{ team.name }}: {{ team.score}}
               </span>
             </div>
             <div class="ml-4 mt-4 flex-shrink-0 flex">

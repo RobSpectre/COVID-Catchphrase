@@ -331,3 +331,22 @@ html.img-top div.slide-background.present {
 .selecteddeck {
   @apply pointer-events-none absolute inset-0 rounded-lg border-4 border-green;
 }
+
+.primary-button {
+  @apply block w-full text-center rounded-lg border border-transparent bg-green
+  px-4 py-2 text-base leading-6 font-semibold text-white transition ease-in-out duration-150
+  uppercase;
+}
+
+.primary-button:hover, .primary-button:focus, .primary-button:active {
+  @apply text-white bg-orange transition ease-in-out duration-150
+}
+
+.secondary-button {
+  @apply inline-flex items-center px-6 py-3 border border-transparent text-base
+  leading-6 font-medium rounded-md text-white bg-blue transition ease-in-out duration-150;
+}
+
+.secondary-button:hover, .primary-button:focus, .primary-button:active {
+  @apply text-white bg-orange transition ease-in-out duration-150
+}

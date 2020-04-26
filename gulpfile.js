@@ -32,6 +32,7 @@ gulp.task('watch', function() {
   gulp.watch('./js/App.vue', gulp.series('js'));
   gulp.watch('./components/*', gulp.series('js'));
   gulp.watch('*.html', livereload());
+  gulp.watch('./decks/*.json', gulp.series('js'));
   livereload.listen()
 });
 

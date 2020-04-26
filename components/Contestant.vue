@@ -8,40 +8,76 @@
           <div class="bg-white overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:p-6">
               <div>
-                <div class="text-sm leading-5 font-medium text-gray-500 truncate">
-                Skips 
+                <div class="text-lg leading-5 font-medium text-black truncate
+                  uppercase">
+                  Skips
                 </div>
-                <div class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                <div class="mt-6 text-6xl leading-9 font-semibold text-black">
                  {{ skips.length }} 
                 </div>
               </div>
             </div>
           </div>
           <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
-                <div class="text-green">Team: {{ teamName }}</div>
-                <button type="button" class="inline-flex items-center px-6 py-3
-                  border border-transparent text-base leading-6 font-medium
-                  rounded-md text-white bg-blue hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150"
-                  @click="skip">                
-    Skip
-  </button>
-                <button type="button" class="inline-flex items-center px-6 py-3
-                  border border-transparent text-base leading-6 font-medium
-                  rounded-md text-white bg-green hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150"
-                  @click="score">                
-    Correct 
-  </button>
+            <div class="px-2 py-3 sm:p-6 mt-3">
+              <button type="button" class="inline-flex items-center px-6 py-3
+              border border-transparent text-base leading-6 font-medium
+              rounded-md text-white bg-blue hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150"
+                                    @click="skip">                
+                Skip
+              </button>
+              <button type="button" class="inline-flex items-center px-6 py-3
+              border border-transparent text-base leading-6 font-medium
+              rounded-md text-white bg-green hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150"
+                                    @click="score">                
+                Correct 
+              </button>
             </div>
           </div>
           <div class="bg-white overflow-hidden shadow rounded-lg">
             <div class="px-4 py-5 sm:p-6">
               <div>
-                <div class="text-sm leading-5 font-medium text-gray-500 truncate">
+                <div class="text-lg leading-5 font-medium text-black truncate
+                  uppercase">
                 Correct
                 </div>
-                <div class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                <div class="mt-6 text-6xl leading-9 font-semibold text-black">
                   {{ correctAnswers.length }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <div class="overflow-hidden">
+            <div class="px-4 py-5 sm:p-6">
+              <div>
+                <div class="text-base font-medium text-white">
+                  <span class="block" v-for="skipped in skips">{{ skipped }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="overflow-hidden">
+            <div class="px-2 py-3 sm:p-6">
+              <div>
+                <div class="text-lg leading-5 font-medium text-white truncate
+                  uppercase">
+                  {{ playerTeam }} 
+                </div>
+                <div class="text-2xl font-medium text-white" v-for="player in getPlayersFromTeam(playerTeam)">
+                  <span class="block" v-if="player.name !== playerName">{{
+                  player.name }} </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="overflow-hidden">
+            <div class="px-4 py-5 sm:p-6">
+              <div>
+                <div class="text-base font-medium text-white">
+                  <span class="block" v-for="correct in correctAnswers">{{ correct  }}</span>
                 </div>
               </div>
             </div>
@@ -88,6 +124,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 
 
@@ -109,6 +146,7 @@ export default {
           'contest-length'],
   computed: {
     ...mapState(['game']),
+    ...mapGetters(['getPlayersFromTeam']),
   },
   methods: {
     startGame() {

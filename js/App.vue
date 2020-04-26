@@ -26,8 +26,23 @@
         <h3 class="fragment">2 Minute</h3>
         <h1>Gameplay</h1>
       </section>
-      <section>
-        <h1>Demo</h1>
+      <section class="green">
+        <h2 class="headline">Demo</h2>
+      </section>
+      <section class="darkgray">
+        <h2 class="headline">covfefe</h2>
+      </section>
+      <section class="darkgray">
+        <h2 class="headline">England</h2>
+      </section>
+      <section class="darkgray">
+        <h2 class="headline">Bourbon</h2>
+      </section>
+      <section class="darkgray">
+        <h2 class="headline">hockey</h2>
+      </section>
+      <section class="darkgray">
+        <h2 class="headline">ragequit</h2>
       </section>
       <add-player-card></add-player-card>
       <choose-deck-card></choose-deck-card>

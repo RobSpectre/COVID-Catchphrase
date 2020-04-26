@@ -159,7 +159,14 @@ var _default = {
       skips: [],
       started: false,
       timeLeft: this.contestLength,
-      points: parseInt(this.pointValue)
+      points: parseInt(this.pointValue),
+      notEnded: true,
+      soundMap: {
+        correct: ['/sounds/Success_1.mp3', '/sounds/Success_2.mp3', '/sounds/Yeah.mp3', '/sounds/smb_powerup.wav', '/sounds/4.mp3', '/sounds/8.mp3', '/sounds/12.mp3', '/sounds/item-2.mp3', '/sounds/key.mp3'],
+        wrong: ['/sounds/Wrong_1.mp3', '/sounds/Wrong_2.mp3', '/sounds/Wrong_3.mp3', '/sounds/Moan.mp3', '/sounds/smb_bump.wav', '/sounds/battery-critical.mp3', '/sounds/error.mp3', '/sounds/hardware-fail.mp3', '/sounds/hardware-remove.mp3', '/sounds/shutdown.mp3', '/sounds/nope.mp3', '/sounds/ok.mp3', '/sounds/really.mp3', '/sounds/wow.mp3', '/sounds/3.mp3', '/sounds/why-you-fail.mp3', '/sounds/kill.mp3'],
+        wins: ['/sounds/Victory.mp3', '/sounds/smb_stage_clear.wav'],
+        fails: ['/sounds/Game_Over.mp3']
+      }
     };
   },
   props: ['player-name', 'player-team', 'point-value', 'contest-length'],
@@ -172,19 +179,28 @@ var _default = {
     },
     iterateClock: function iterateClock() {
       if (this.timeLeft > 0) {
+        if (this.timeLeft == 20) {
+          this.play("/sounds/smb_warning.wav");
+        }
+
         this.timeLeft--;
         setTimeout(this.iterateClock, 1000);
+      } else {
+        this.notEnded = false;
+        this.play(this.sound_win());
       }
     },
     cycleContest: function cycleContest() {
       this.retrieveCard();
     },
     skip: function skip() {
+      this.play(this.sound_wrong());
       this.skips.push(this.game.currentCatchphrase);
       this.addSkipped(this.game.currentCatchphrase);
       this.cycleContest();
     },
     score: function score() {
+      this.play(this.sound_correct());
       this.increasePlayerScore({
         player_name: this.playerName,
         value: this.points
@@ -192,6 +208,22 @@ var _default = {
       this.correctAnswers.push(this.game.currentCatchphrase);
       this.addCorrectAnswer(this.game.currentCatchphrase);
       this.cycleContest();
+    },
+    play: function play(sound) {
+      var audio = new Audio(sound);
+      audio.play();
+    },
+    sound_correct: function sound_correct() {
+      return this.soundMap.correct[Math.floor(Math.random() * this.soundMap.correct.length)];
+    },
+    sound_wrong: function sound_wrong() {
+      return this.soundMap.wrong[Math.floor(Math.random() * this.soundMap.wrong.length)];
+    },
+    sound_win: function sound_win() {
+      return this.soundMap.wins[Math.floor(Math.random() * this.soundMap.wins.length)];
+    },
+    sound_fail: function sound_fail() {
+      return this.soundMap.fails[Math.floor(Math.random() * this.soundMap.fails.length)];
     }
   }, (0, _vuex.mapMutations)(['increasePlayerScore', 'retrieveCard', 'addSkipped', 'addCorrectAnswer']))
 };
@@ -200,7 +232,7 @@ exports["default"] = _default;
 if (module.exports.__esModule) module.exports = module.exports.default
 var __vue__options__ = (typeof module.exports === "function"? module.exports.options: module.exports)
 if (__vue__options__.functional) {console.error("[vueify] functional components are not supported and should be defined in plain js files using render functions.")}
-__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"darkgray"},[(_vm.started)?_c('div',[_c('h3',{staticClass:"text-white"},[_vm._v(_vm._s(_vm.timeLeft))]),_vm._v(" "),(_vm.started)?_c('h2',{staticClass:"headline",attrs:{"i":""}},[_vm._v(_vm._s(_vm.game.currentCatchphrase))]):_vm._e(),_vm._v(" "),_c('div',[_c('div',{staticClass:"mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3"},[_c('div',{staticClass:"bg-white overflow-hidden shadow rounded-lg"},[_c('div',{staticClass:"px-4 py-5 sm:p-6"},[_c('div',[_c('div',{staticClass:"text-lg leading-5 font-medium text-black truncate\n                  uppercase"},[_vm._v("\n                  Skips\n                ")]),_vm._v(" "),_c('div',{staticClass:"mt-6 text-6xl leading-9 font-semibold text-black"},[_vm._v("\n                 "+_vm._s(_vm.skips.length)+" \n                ")])])])]),_vm._v(" "),_c('div',{staticClass:"bg-white overflow-hidden shadow rounded-lg"},[_c('div',{staticClass:"px-2 py-3 sm:p-6 mt-3"},[_c('button',{staticClass:"inline-flex items-center px-6 py-3\n              border border-transparent text-base leading-6 font-medium\n              rounded-md text-white bg-blue hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150",attrs:{"type":"button"},on:{"click":_vm.skip}},[_vm._v("                \n                Skip\n              ")]),_vm._v(" "),_c('button',{staticClass:"inline-flex items-center px-6 py-3\n              border border-transparent text-base leading-6 font-medium\n              rounded-md text-white bg-green hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150",attrs:{"type":"button"},on:{"click":_vm.score}},[_vm._v("                \n                Correct \n              ")])])]),_vm._v(" "),_c('div',{staticClass:"bg-white overflow-hidden shadow rounded-lg"},[_c('div',{staticClass:"px-4 py-5 sm:p-6"},[_c('div',[_c('div',{staticClass:"text-lg leading-5 font-medium text-black truncate\n                  uppercase"},[_vm._v("\n                Correct\n                ")]),_vm._v(" "),_c('div',{staticClass:"mt-6 text-6xl leading-9 font-semibold text-black"},[_vm._v("\n                  "+_vm._s(_vm.correctAnswers.length)+"\n                ")])])])])])]),_vm._v(" "),_c('div',{staticClass:"mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3"},[_c('div',{staticClass:"overflow-hidden"},[_c('div',{staticClass:"px-4 py-5 sm:p-6"},[_c('div',[_c('div',{staticClass:"text-base font-medium text-white"},_vm._l((_vm.skips),function(skipped){return _c('span',{staticClass:"block"},[_vm._v(_vm._s(skipped))])}),0)])])]),_vm._v(" "),_c('div',{staticClass:"overflow-hidden"},[_c('div',{staticClass:"px-2 py-3 sm:p-6"},[_c('div',[_c('div',{staticClass:"text-lg leading-5 font-medium text-white truncate\n                  uppercase"},[_vm._v("\n                  "+_vm._s(_vm.playerTeam)+" \n                ")]),_vm._v(" "),_vm._l((_vm.getPlayersFromTeam(_vm.playerTeam)),function(player){return _c('div',{staticClass:"text-2xl font-medium text-white"},[(player.name !== _vm.playerName)?_c('span',{staticClass:"block"},[_vm._v(_vm._s(player.name)+" ")]):_vm._e()])})],2)])]),_vm._v(" "),_c('div',{staticClass:"overflow-hidden"},[_c('div',{staticClass:"px-4 py-5 sm:p-6"},[_c('div',[_c('div',{staticClass:"text-base font-medium text-white"},_vm._l((_vm.correctAnswers),function(correct){return _c('span',{staticClass:"block"},[_vm._v(_vm._s(correct))])}),0)])])])])]):_c('div',{staticClass:"mt-20"},[_c('div',{staticClass:"relative bg-gray-800"},[_vm._m(0),_vm._v(" "),_c('div',{staticClass:"relative max-w-screen-xl mx-auto px-4 py-12 sm:px-6 lg:px-8 lg:py-16"},[_c('div',{staticClass:"md:ml-auto md:w-1/2 md:pl-10"},[_c('div',{staticClass:"text-base leading-6 font-semibold uppercase tracking-wider text-gray-300"},[_vm._v("\n\t\t\t\t\t\t\tAward winning support\n\t\t\t\t\t\t")]),_vm._v(" "),_c('span',{staticClass:"mt-2 text-white text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl sm:leading-10"},[_vm._v("\n\t\t\t\t\t\t\tWe’re here to help\n\t\t\t\t\t\t")]),_vm._v(" "),_c('p',{staticClass:"mt-3 text-lg leading-7 text-gray-300"},[_vm._v("\n              Rob is really running out of time to ship this for tonight. Enjoy\n              this crisp, royalty free UI.\n\t\t\t\t\t\t")]),_vm._v(" "),_c('div',{staticClass:"mt-8"},[_c('div',{staticClass:"inline-flex rounded-md shadow"},[_c('a',{staticClass:"inline-flex items-center justify-center px-5\n                  py-3 border border-transparent text-base leading-6\n                  font-medium rounded-md text-gray-900 bg-green\n                  hover:text-gray-600 focus:outline-none focus:shadow-outline\n                  transition duration-150 ease-in-out uppercase",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.startGame($event)}}},[_vm._v("\n\t\t\t\t\t\t\t\t Let's Go!\n\t\t\t\t\t\t\t\t")])])])])])])]),_vm._v(" "),_c('h1',[_vm._v(_vm._s(_vm.playerName))])])}
+__vue__options__.render = function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"darkgray"},[(_vm.started)?_c('div',[_c('h3',{staticClass:"text-white"},[_vm._v(_vm._s(_vm.timeLeft))]),_vm._v(" "),(_vm.started)?_c('h2',{staticClass:"headline",attrs:{"i":""}},[_vm._v(_vm._s(_vm.game.currentCatchphrase))]):_vm._e(),_vm._v(" "),_c('div',[_c('div',{staticClass:"mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3"},[_c('div',{staticClass:"bg-white overflow-hidden shadow rounded-lg"},[_c('div',{staticClass:"px-4 py-5 sm:p-6"},[_c('div',[_c('div',{staticClass:"text-lg leading-5 font-medium text-black truncate\n                  uppercase"},[_vm._v("\n                  Skips\n                ")]),_vm._v(" "),_c('div',{staticClass:"mt-6 text-6xl leading-9 font-semibold text-black"},[_vm._v("\n                 "+_vm._s(_vm.skips.length)+" \n                ")])])])]),_vm._v(" "),_c('div',{staticClass:"overflow-hidden"},[_c('div',{staticClass:"px-2 py-3 sm:p-6 mt-3"},[(_vm.notEnded)?_c('button',{staticClass:"inline-flex items-center px-6 py-3\n              border border-transparent text-base leading-6 font-medium\n              rounded-md text-white bg-blue hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150",attrs:{"type":"button"},on:{"click":_vm.skip}},[_vm._v("                \n                Skip\n              ")]):_vm._e(),_vm._v(" "),(_vm.notEnded)?_c('button',{staticClass:"inline-flex items-center px-6 py-3\n              border border-transparent text-base leading-6 font-medium\n              rounded-md text-white bg-green hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150",attrs:{"type":"button"},on:{"click":_vm.score}},[_vm._v("                \n                Correct \n              ")]):_vm._e()])]),_vm._v(" "),_c('div',{staticClass:"bg-white overflow-hidden shadow rounded-lg"},[_c('div',{staticClass:"px-4 py-5 sm:p-6"},[_c('div',[_c('div',{staticClass:"text-lg leading-5 font-medium text-black truncate\n                  uppercase"},[_vm._v("\n                Correct\n                ")]),_vm._v(" "),_c('div',{staticClass:"mt-6 text-6xl leading-9 font-semibold text-black"},[_vm._v("\n                  "+_vm._s(_vm.correctAnswers.length)+"\n                ")])])])])])]),_vm._v(" "),_c('div',{staticClass:"mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3"},[_c('div',{staticClass:"overflow-hidden"},[_c('div',{staticClass:"px-4 py-5 sm:p-6"},[_c('div',[_c('div',{staticClass:"text-base font-medium text-white"},_vm._l((_vm.skips),function(skipped){return _c('span',{staticClass:"block"},[_vm._v(_vm._s(skipped))])}),0)])])]),_vm._v(" "),_c('div',{staticClass:"overflow-hidden"},[_c('div',{staticClass:"px-2 py-3 sm:p-6"},[_c('div',[_c('div',{staticClass:"text-lg leading-5 font-medium text-white truncate\n                  uppercase"},[_vm._v("\n                  "+_vm._s(_vm.playerTeam)+" \n                ")]),_vm._v(" "),_vm._l((_vm.getPlayersFromTeam(_vm.playerTeam)),function(player){return _c('div',{staticClass:"text-2xl font-medium text-white"},[(player.name !== _vm.playerName)?_c('span',{staticClass:"block"},[_vm._v(_vm._s(player.name)+" ")]):_vm._e()])})],2)])]),_vm._v(" "),_c('div',{staticClass:"overflow-hidden"},[_c('div',{staticClass:"px-4 py-5 sm:p-6"},[_c('div',[_c('div',{staticClass:"text-base font-medium text-white"},_vm._l((_vm.correctAnswers),function(correct){return _c('span',{staticClass:"block"},[_vm._v(_vm._s(correct))])}),0)])])])])]):_c('div',{staticClass:"mt-20"},[_c('div',{staticClass:"relative bg-gray-800"},[_vm._m(0),_vm._v(" "),_c('div',{staticClass:"relative max-w-screen-xl mx-auto px-4 py-12 sm:px-6 lg:px-8 lg:py-16"},[_c('div',{staticClass:"md:ml-auto md:w-1/2 md:pl-10"},[_c('div',{staticClass:"text-base leading-6 font-semibold uppercase tracking-wider text-gray-300"},[_vm._v("\n\t\t\t\t\t\t\tAward winning support\n\t\t\t\t\t\t")]),_vm._v(" "),_c('span',{staticClass:"mt-2 text-white text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl sm:leading-10"},[_vm._v("\n\t\t\t\t\t\t\tWe’re here to help\n\t\t\t\t\t\t")]),_vm._v(" "),_c('p',{staticClass:"mt-3 text-lg leading-7 text-gray-300"},[_vm._v("\n              Rob is really running out of time to ship this for tonight. Enjoy\n              this crisp, royalty free UI.\n\t\t\t\t\t\t")]),_vm._v(" "),_c('div',{staticClass:"mt-8"},[_c('div',{staticClass:"inline-flex rounded-md shadow"},[_c('a',{staticClass:"inline-flex items-center justify-center px-5\n                  py-3 border border-transparent text-base leading-6\n                  font-medium rounded-md text-gray-900 bg-green\n                  hover:text-gray-600 focus:outline-none focus:shadow-outline\n                  transition duration-150 ease-in-out uppercase",attrs:{"href":"#"},on:{"click":function($event){$event.preventDefault();return _vm.startGame($event)}}},[_vm._v("\n\t\t\t\t\t\t\t\t Let's Go!\n\t\t\t\t\t\t\t\t")])])])])])])]),_vm._v(" "),_c('h1',[_vm._v(_vm._s(_vm.playerName))])])}
 __vue__options__.staticRenderFns = [function render () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"h-32 bg-indigo-600 sm:h-72 md:absolute md:left-0 md:h-full md:w-1/2"},[_c('img',{staticClass:"w-full h-full object-cover",attrs:{"src":"https://images.unsplash.com/photo-1525130413817-d45c1d127c42?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60&blend=6875F5&sat=-100&blend-mode=multiply","alt":"Support team"}})])}]
 if (module.hot) {(function () {  var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)

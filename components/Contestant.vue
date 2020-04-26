@@ -18,15 +18,15 @@
               </div>
             </div>
           </div>
-          <div class="bg-white overflow-hidden shadow rounded-lg">
+          <div class="overflow-hidden">
             <div class="px-2 py-3 sm:p-6 mt-3">
-              <button type="button" class="inline-flex items-center px-6 py-3
+              <button v-if="notEnded" type="button" class="inline-flex items-center px-6 py-3
               border border-transparent text-base leading-6 font-medium
               rounded-md text-white bg-blue hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150"
                                     @click="skip">                
                 Skip
               </button>
-              <button type="button" class="inline-flex items-center px-6 py-3
+              <button v-if="notEnded" type="button" class="inline-flex items-center px-6 py-3
               border border-transparent text-base leading-6 font-medium
               rounded-md text-white bg-green hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg- transition ease-in-out duration-150"
                                     @click="score">                
@@ -136,7 +136,47 @@ export default {
       skips: [],
       started: false,
       timeLeft: this.contestLength,
-      points: parseInt(this.pointValue)
+      points: parseInt(this.pointValue),
+      notEnded: true,
+      soundMap: {
+        correct: [
+          '/sounds/Success_1.mp3',
+          '/sounds/Success_2.mp3',
+          '/sounds/Yeah.mp3',
+          '/sounds/smb_powerup.wav',
+          '/sounds/4.mp3',
+          '/sounds/8.mp3',
+          '/sounds/12.mp3',
+          '/sounds/item-2.mp3',
+          '/sounds/key.mp3'
+        ],
+        wrong: [
+          '/sounds/Wrong_1.mp3',
+          '/sounds/Wrong_2.mp3',
+          '/sounds/Wrong_3.mp3',
+          '/sounds/Moan.mp3',
+          '/sounds/smb_bump.wav',
+          '/sounds/battery-critical.mp3',
+          '/sounds/error.mp3',
+          '/sounds/hardware-fail.mp3',
+          '/sounds/hardware-remove.mp3',
+          '/sounds/shutdown.mp3',
+          '/sounds/nope.mp3',
+          '/sounds/ok.mp3',
+          '/sounds/really.mp3',
+          '/sounds/wow.mp3',
+          '/sounds/3.mp3',
+          '/sounds/why-you-fail.mp3',
+          '/sounds/kill.mp3'
+        ],
+        wins: [
+          '/sounds/Victory.mp3',
+          '/sounds/smb_stage_clear.wav'
+        ],
+        fails: [
+          '/sounds/Game_Over.mp3'
+        ]
+      }
     }
   },
   props: ['player-name',
@@ -155,25 +195,49 @@ export default {
     },
     iterateClock() {
       if (this.timeLeft > 0 ) {
+        if (this.timeLeft == 20) {
+          this.play("/sounds/smb_warning.wav")
+        }
         this.timeLeft--
         setTimeout(this.iterateClock,
                    1000)
+      } else {
+        this.notEnded = false
+        this.play(this.sound_win())
       }
     },
     cycleContest() {
       this.retrieveCard()
     },
     skip() {
+      this.play(this.sound_wrong())
       this.skips.push(this.game.currentCatchphrase)
       this.addSkipped(this.game.currentCatchphrase)
       this.cycleContest()
     },
     score() {
+      this.play(this.sound_correct())
       this.increasePlayerScore({player_name: this.playerName,
                                  value: this.points})
       this.correctAnswers.push(this.game.currentCatchphrase)
       this.addCorrectAnswer(this.game.currentCatchphrase)
       this.cycleContest()
+    },
+    play(sound) {
+      var audio = new Audio(sound)
+      audio.play()
+    },
+    sound_correct: function() {
+        return this.soundMap.correct[Math.floor(Math.random()*this.soundMap.correct.length)]
+    },
+    sound_wrong: function() {
+        return this.soundMap.wrong[Math.floor(Math.random()*this.soundMap.wrong.length)]
+    },
+    sound_win: function() {
+        return this.soundMap.wins[Math.floor(Math.random()*this.soundMap.wins.length)]
+    },
+    sound_fail: function() {
+        return this.soundMap.fails[Math.floor(Math.random()*this.soundMap.fails.length)]
     },
     ...mapMutations(['increasePlayerScore',
                      'retrieveCard',

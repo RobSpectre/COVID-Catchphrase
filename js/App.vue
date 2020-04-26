@@ -49,15 +49,36 @@
       <round name="One"
              point-value=1
              contest-length=90></round>
+      <section class="intro" data-background-video="images/covid-19.mp4"
+                             data-background-color="#000"
+                             data-background-video-loop>
+        <div class="title">
+          <img style="margin-top: 7em;" src="images/covid_catchphrase.png" />
+          <h3>Beverage Break</h3>
+          <h3>covid-19</h3>
+          <h3>Rad Jet bro</h3>
+        </div>
+      </section>
       <add-player-card></add-player-card>
       <choose-deck-card></choose-deck-card>
       <round name="Two"
              point-value=2
              contest-length=60></round>
+      <section class="intro" data-background-video="images/turn_the_frogs.mp4"
+                             data-background-color="#000"
+                             data-background-video-loop>
+        <div class="title">
+          <img style="margin-top: 7em;" src="images/covid_catchphrase.png" />
+          <h3>Beverage Break</h3>
+          <h3>Alex Jones is so weird</h3>
+          <h3>How did this happen</h3>
+        </div>
+      </section>
       <add-player-card></add-player-card>
       <round name="Final"
              point-value=3
              contest-length=90></round>
+      <add-player-card></add-player-card>
     </div>
   </div>
 </template>

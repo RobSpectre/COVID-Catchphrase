@@ -24,7 +24,7 @@
     "jshint-stylish": "^2.0.1",
     "require-context": "^1.1.0",
     "tailwindcss": "^1.2.0",
-    "vue": "^2.6.11",
+    "vue": "^3.0.0",
     "vue-carousel": "^0.18.0",
     "vue-circular-count-down-timer": "^1.0.4",
     "vue-smooth-dnd": "^0.8.1",
